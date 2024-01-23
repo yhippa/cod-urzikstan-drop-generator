@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+#coordinateDisplay {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#gridContainer {
+    display: grid;
+    grid-template-columns: 25px repeat(10, 30px);
+    grid-template-rows: 25px repeat(10, 30px);
+    justify-content: center;
+}
+
+#grid {
+    grid-column-start: 2;
+    grid-row-start: 2;
+    display: grid;
+    grid-template-columns: repeat(10, 30px);
+    grid-template-rows: repeat(10, 30px);
+}
+
+#grid div, .row-header, .column-header {
+    border: 1px solid black;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+}
+
+.row-header, .column-header {
+    line-height: 25px;
+    background-color: #ddd;
+}
+
+.selected {
+    background-color: yellow;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+}
