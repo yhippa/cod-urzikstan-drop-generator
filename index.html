@@ -1,15 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Warzone Map Selector</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Warzone 2 Urzikstan Grid Drop Generator</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr); /* Include header */
+            gap: 1px;
+            background-color: black;
+        }
+        .grid-header, .grid-item {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+        .highlight {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        .grid-header {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div id="coordinateDisplay">Selected Coordinate: None</div>
-    <div id="gridContainer">
-        <div id="grid"></div>
-    </div>
-    <button id="randomButton">Select Random Square</button>
-    <script src="script.js"></script>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>Warzone 2 Urzikstan Drop Generator</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#" role="button">Contact</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="grid">
+            <section>
+                <hgroup>
+                    <h2>Warzone 2 Urzikstan Grid Drop Generator</h2>
+                    <h3>Discover Your Next Drop Location in Urzikstan</h3>
+                </hgroup>
+                <p>Click the button to generate a random grid coordinate for your next landing spot in Warzone 2's Urzikstan map.</p>
+                <!-- Display area for the grid coordinate -->
+                <div id="selectedCoordinate" style="font-size: 20px; font-weight: bold; margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 5px; text-align: center;">
+                    Your drop location: <span id="coordinateDisplay">Press Generate</span>
+                </div>
+                <button type="button" onclick="generateGridDrop()">Generate Grid Drop</button>
+                <div id="gridLocation" class="grid-container" style="margin-top: 20px;">
+                    <!-- Grid with headers will be dynamically generated here -->
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="container">
+        <small>
+            <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a>
+        </small>
+    </footer>
+    <script>
+        const letters = "ABCDEFGHIJ";
+        const excludedCells = ["A1","A2","A3","A4","A5","A6","A7","A8","A9","B0","B9","C0","C9","D0","D9","E0","E9","F0","F9","G0","G9","H0","H9","I0","I9","J0","J1","J2","J3","J4","J5","J6","J7","J8","J9"];
+        const gridContainer = document.getElementById("gridLocation");
+
+        function createGrid() {
+            // Create header for the columns
+            for (let i = 0; i <= 10; i++) {
+                const header = document.createElement("div");
+                header.classList.add("grid-header");
+                header.textContent = i === 0 ? "" : letters[i - 1];
+                gridContainer.appendChild(header);
+            }
+            // Create grid cells with row headers
+            for (let i = 0; i < 10; i++) {
+                const rowHeader = document.createElement("div");
+                rowHeader.classList.add("grid-header");
+                rowHeader.textContent = i;
+                gridContainer.appendChild(rowHeader);
+                for (let j = 0; j < 10; j++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("grid-item");
+                    cell.id = letters[j] + i;
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function generateGridDrop() {
+            let isValid = false;
+            let letter;
+            let number;
+            while (!isValid) {
+                letter = letters.charAt(Math.floor(Math.random() * letters.length));
+                number = Math.floor(Math.random() * 10);
+                isValid = !excludedCells.includes(letter + number);
+            }
+            // Clear previous highlights
+            document.querySelectorAll('.grid-item').forEach(item => {
+                if (!item.classList.contains("grid-header")) {
+                    item.classList.remove('highlight');
+                }
+            });
+            const selectedCell = document.getElementById(letter + number);
+            selectedCell.classList.add("highlight");
+
+            // Update the displayed grid coordinate
+            document.getElementById("coordinateDisplay").textContent = letter + number;
+        }
+
+        createGrid();
+    </script>
 </body>
 </html>
