@@ -74,12 +74,12 @@
                     <h2>Warzone 2 Urzikstan Grid Drop Generator</h2>
                     <h3>Discover Your Next Drop Location in Urzikstan</h3>
                 </hgroup>
-                <p>Click the button to generate a random grid coordinate for your next landing spot in Warzone 2's Urzikstan map.</p>
+                <p id="instructions">Listen up, you clueless bag of bones! I'm going to give you instructions, so head to the far end of nowhere, take a left at Dumbass Junction, and march straight into Idiotville. Now click the button!</p>
                 <!-- Display area for the grid coordinate -->
                 <div id="selectedCoordinate" style="font-size: 20px; font-weight: bold; margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 5px; text-align: center;">
                     Your drop location: <span id="coordinateDisplay">Press Generate</span>
                 </div>
-                <button type="button" onclick="generateGridDrop()">Generate Grid Drop</button>
+                <button type="button" id="generateButton" onclick="generateGridDrop()">Generate Grid Drop</button>
                 <div id="gridLocation" class="grid-container" style="margin-top: 20px;">
                     <!-- Grid with headers will be dynamically generated here -->
                 </div>
@@ -92,6 +92,111 @@
         </small>
     </footer>
     <script>
+        const drillSergeantQuips = [
+            "Listen up, you hopeless sack of meat! I'll give you instructions: go to Nowhere, take a left at Dumbass Junction, and march into Idiotville. Now click the button!",
+            "Attention, you sorry excuse for a recruit! Follow my directions: head to the end of Loserville, turn right at Clueless Corner, and march to Idiotville. Now click the button!",
+            "Hey, you brain-dead maggot! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "Listen up, you confused slug! Your instructions: go to the edge of Stupid, turn left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You dense piece of garbage! I'm giving you directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you witless fool! Follow these instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You miserable excuse for a recruit! Your directions are: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you clueless dolt! I'm giving you directions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you dimwit! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You sorry sack of potatoes! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you pathetic fool! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You worthless idiot! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you dumbass! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You brainless moron! Your directions are: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you clueless waste of space! I'm giving you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you idiot! Follow these instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You useless twit! Here are your directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you dumb fool! I'm giving you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You pathetic excuse for a soldier! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you blockhead! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "Listen up, you pea-brained nitwit! I'll give you directions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You worthless fool! Follow these instructions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you dimwit! Here are your directions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You clueless idiot! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you hopeless nitwit! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You brain-dead recruit! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you blockhead! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You useless moron! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you clueless twit! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You sorry excuse for a soldier! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you dimwit! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You worthless idiot! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you dumbass! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You pathetic fool! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you hopeless nitwit! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You brain-dead blockhead! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you clueless idiot! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You worthless twit! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you dumb fool! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You pathetic excuse for a recruit! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you pea-brained idiot! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You worthless nitwit! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you dimwit! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You sorry excuse for a soldier! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you clueless moron! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "You brain-dead nitwit! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Hey, you hopeless idiot! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
+            "You useless fool! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
+            "Listen up, you worthless twit! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!"
+        ];
+        const buttonQuips = 
+            ["Push that button like it's a big red snooze button!",
+            "Button, meet Private. Private, meet button. Now, make it happen!",
+            "Push that button like it's free pizza delivery!",
+            "Push that button like it's a giant chocolate chip cookie!",
+            "Push that button like it owes you money!",
+            "Push that button like it's your weekend pass!",
+            "Push that button like it's your ex's ego!",
+            "Push that button like it's a surprise family reunion!",
+            "Push that button like it's the last slice of pizza!",
+            "Push that button like it's an elevator door close button!",
+            "Push that button like it's the 'skip ad' button!",
+            "Push that button like it's ending a bad blind date!",
+            "Push that button like it's giant bubble wrap!",
+            "Push that button like it's a million-dollar answer!",
+            "Push that button like it's last call at the bar!",
+            "Push that button like it's your ticket home!",
+            "Push that button like it's a lottery ticket!",
+            "Push that button like it's your favorite game!",
+            "Push that button like it's a fire alarm in a drill!",
+            "Push that button like it's a carnival game!",
+            "Push that button like it's a photo booth!",
+            "Push that button like it's a big red candy button!",
+            "Push that button like it's the winning buzzer!",
+            "Push that button like it's a prank on your buddy!",
+            "Push that button like it's a game show button!",
+            "Push that button like it's a confetti cannon!",
+            "Push that button like it's a doorbell on Halloween!",
+            "Push that button like it's a surprise party popper!",
+            "Push that button like it's a jackpot slot machine!",
+            "Push that button like it's a superhero's signal!",
+            "Push that button like it's your birthday wish!",
+            "Push that button like it's a vending machine!",
+            "Push that button like it's a pinball machine!",
+            "Push that button like it's a high score record!",
+            "Push that button like it's a magic trick!",
+            "Push that button like it's a snow day announcement!",
+            "Push that button like it's a quiz show answer!",
+            "Push that button like it's your favorite song!",
+            "Push that button like it's a golden ticket!",
+            "Push that button like it's a VIP pass!",
+            "Push that button like it's a dream come true!",
+            "Push that button like it's the end of a marathon!",
+            "Push that button like it's a buzzer beater!",
+            "Push that button like it's the finish line!",
+            "Push that button like it's a race starter!",
+            "Push that button like it's a roller coaster start!",
+            "Push that button like it's a secret agent gadget!",
+            "Push that button like it's a surprise gift!",
+            "Push that button like it's a space shuttle launch!",
+            "Push that button like it's your favorite toy!"
+            ];
+
+
         const letters = "ABCDEFGHIJ";
         const excludedCells = ["A0","A1","A2","A3","A4","A5","A6","A7","A8","A9","B0","B9","C0","C9","D0","D9","E0","E9","F0","F9","G0","G9","H0","H9","I0","I9","J0","J1","J2","J3","J4","J5","J6","J7","J8","J9"];
         const gridContainer = document.getElementById("gridLocation");
@@ -132,19 +237,31 @@
             document.querySelectorAll('.grid-item').forEach(item => {
                 if (!item.classList.contains("grid-header")) {
                     item.classList.remove('highlight');
-                    item.textContent = "";
+                    item.textContent = ""; //Also remove the grid name from the contents
                 }
                 
             });
             const selectedCell = document.getElementById(letter + number);
             selectedCell.classList.add("highlight");
-            selectedCell.textContent = letter + number;
+            selectedCell.textContent = letter + number; //add the combo within the grid
 
             // Update the displayed grid coordinate
             document.getElementById("coordinateDisplay").textContent = letter + number;
 
         }
 
+        function generateQuip() {
+            // Randomly select an entry from the array for the button text
+            document.getElementById("generateButton").textContent = buttonQuips[Math.floor(Math.random() * buttonQuips.length)];
+        }
+
+        function addDrillSargeant() {
+            // Randomly select an entry from the array for the button text
+            document.getElementById("instructions").textContent = drillSergeantQuips[Math.floor(Math.random() * drillSergeantQuips.length)];
+        }
+
+        addDrillSargeant();
+        generateQuip();
         createGrid();
     </script>
 </body>
