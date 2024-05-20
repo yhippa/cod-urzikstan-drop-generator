@@ -15,14 +15,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <title>Warzone 2 Urzikstan Grid Drop Generator</title>
     <style>
+        body {
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(11, 1fr); /* Include header */
             gap: 1px;
-            background-color: black;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-image: url('/images/URZ_FullMap_BaseLayer.png');
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 1;
+            margin: auto;
         }
         .grid-header, .grid-item {
-            background-color: #f0f0f0;
+            /*background-color: #f0f0f0;*/
             text-align: center;
             padding: 10px 0;
             font-size: 14px;
@@ -33,6 +45,12 @@
         }
         .grid-header {
             font-weight: bold;
+        }
+        .grid-item {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9594398022297274"
@@ -114,13 +132,17 @@
             document.querySelectorAll('.grid-item').forEach(item => {
                 if (!item.classList.contains("grid-header")) {
                     item.classList.remove('highlight');
+                    item.textContent = "";
                 }
+                
             });
             const selectedCell = document.getElementById(letter + number);
             selectedCell.classList.add("highlight");
+            selectedCell.textContent = letter + number;
 
             // Update the displayed grid coordinate
             document.getElementById("coordinateDisplay").textContent = letter + number;
+
         }
 
         createGrid();
