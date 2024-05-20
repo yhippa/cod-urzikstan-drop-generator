@@ -20,9 +20,11 @@
             margin: 0;
             padding: 0;
         }
+
         .main.container {
             padding-top: 0;
         }
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(11, 1fr); /* Include header */
@@ -256,8 +258,10 @@
             selectedCell.classList.add("highlight");
             selectedCell.textContent = letter + number; //add the combo within the grid
             generateQuip();
+
             // Update the displayed grid coordinate
             document.getElementById("coordinateDisplay").textContent = letter + number;
+
         }
 
 
