@@ -76,9 +76,7 @@
                 </hgroup>
                 <p id="instructions">Listen up, you clueless bag of bones! I'm going to give you instructions, so head to the far end of nowhere, take a left at Dumbass Junction, and march straight into Idiotville. Now click the button!</p>
                 <!-- Display area for the grid coordinate -->
-                <div id="selectedCoordinate" style="font-size: 20px; font-weight: bold; margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 5px; text-align: center;">
-                    Your drop location: <span id="coordinateDisplay">Press Generate</span>
-                </div>
+
                 <button type="button" id="generateButton" onclick="generateGridDrop()">Generate Grid Drop</button>
                 <div id="gridLocation" class="grid-container" style="margin-top: 20px;">
                     <!-- Grid with headers will be dynamically generated here -->
@@ -201,6 +199,16 @@
         const excludedCells = ["A0","A1","A2","A3","A4","A5","A6","A7","A8","A9","B0","B9","C0","C9","D0","D9","E0","E9","F0","F9","G0","G9","H0","H9","I0","I9","J0","J1","J2","J3","J4","J5","J6","J7","J8","J9"];
         const gridContainer = document.getElementById("gridLocation");
 
+        function generateQuip() {
+            // Randomly select an entry from the array for the button text
+            document.getElementById("generateButton").textContent = buttonQuips[Math.floor(Math.random() * buttonQuips.length)];
+        }
+
+        function addDrillSargeant() {
+            // Randomly select an entry from the array for the button text
+            document.getElementById("instructions").textContent = drillSergeantQuips[Math.floor(Math.random() * drillSergeantQuips.length)];
+        }
+
         function createGrid() {
             // Create header for the columns
             for (let i = 0; i <= 10; i++) {
@@ -244,21 +252,11 @@
             const selectedCell = document.getElementById(letter + number);
             selectedCell.classList.add("highlight");
             selectedCell.textContent = letter + number; //add the combo within the grid
-
+            generateQuip();
             // Update the displayed grid coordinate
             document.getElementById("coordinateDisplay").textContent = letter + number;
-
         }
 
-        function generateQuip() {
-            // Randomly select an entry from the array for the button text
-            document.getElementById("generateButton").textContent = buttonQuips[Math.floor(Math.random() * buttonQuips.length)];
-        }
-
-        function addDrillSargeant() {
-            // Randomly select an entry from the array for the button text
-            document.getElementById("instructions").textContent = drillSergeantQuips[Math.floor(Math.random() * drillSergeantQuips.length)];
-        }
 
         addDrillSargeant();
         generateQuip();
