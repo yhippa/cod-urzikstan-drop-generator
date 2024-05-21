@@ -166,7 +166,7 @@
             }
         }
 
-        function getHighlightColor(result, count) {
+        function getHighlightColor(result, percentage) {
             const baseColors = {
                 "First": "rgba(76, 175, 80, OPACITY)",
                 "Second": "rgba(76, 175, 80, OPACITY)",
@@ -177,13 +177,15 @@
 
             const maxOpacity = 1;
             const minOpacity = 0.1;
-            const opacity = Math.max(minOpacity, maxOpacity - (count * 0.1));
-            console.log("Opacity calcualted is: " + opactiy);
-            return baseColors[result].replace("OPACITY", .1);
+            const opacity = minOpacity + (percentage * (maxOpacity - minOpacity));
+
+            return baseColors[result].replace("OPACITY", opacity);
         }
 
         function highlightCells(data) {
             const counts = {};
+            const totalCount = data.Items.length;
+
             data.Items.forEach(item => {
                 if (!counts[item.droplocation]) {
                     counts[item.droplocation] = 0;
@@ -195,7 +197,8 @@
                 const cell = document.getElementById(location);
                 if (cell) {
                     const item = data.Items.find(item => item.droplocation === location);
-                    const color = getHighlightColor(item.result, counts[location]);
+                    const percentage = counts[location] / totalCount;
+                    const color = getHighlightColor(item.result, percentage);
                     cell.style.backgroundColor = color;
                     cell.innerHTML = `<span>${location}</span><span>${counts[location]}</span>`;
                 }
