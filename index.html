@@ -184,6 +184,7 @@ const drillSergeantQuips = [
 
         let currentTimestamp = null;
         let currentIdentifier = null;
+        let currentMatch = null;
 
         function generateQuip() {
             document.getElementById("generateButton").textContent = buttonQuips[Math.floor(Math.random() * buttonQuips.length)];
@@ -235,6 +236,7 @@ const drillSergeantQuips = [
             generateQuip();
             addDropdown(letter + number);
             generateTimestampAndIdentifier();
+            currentMatch = letter + number;
         }
 
         function generateTimestampAndIdentifier() {
@@ -257,7 +259,7 @@ const drillSergeantQuips = [
             });
             select.addEventListener('change', function() {
                 if (select.value) {
-                    postResult(match, select.value);
+                    postResult(select.value);
                 }
             });
             const removeButton = document.createElement("button");
@@ -271,13 +273,14 @@ const drillSergeantQuips = [
             matchResults.appendChild(dropdownContainer);
         }
 
-        function postResult(match, result) {
+        function postResult(result) {
             const url = "https://1uqyg72qkf.execute-api.us-east-1.amazonaws.com/default/wz_save_results";
             const data = {
                 TableName: "wz_results",
                 Item: {
                     timestamp: currentTimestamp,
                     identifier: currentIdentifier,
+                    match: currentMatch,
                     result: result
                 }
             };
@@ -285,7 +288,8 @@ const drillSergeantQuips = [
             fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify(data)
             })
