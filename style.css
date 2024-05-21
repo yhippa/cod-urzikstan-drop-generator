@@ -27,7 +27,7 @@ body {
 }
 .grid-container::after {
     content: "";
-    position: absolute;git add
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -41,7 +41,8 @@ body {
 .grid-header, .grid-item {
     text-align: center;
     padding: 10px 0;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
     color: white;
 }
 .grid-header {
