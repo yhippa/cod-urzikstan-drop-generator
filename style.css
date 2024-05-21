@@ -83,6 +83,10 @@ body {
     font-size: 14px;
     width: 20%;
 }
+.highlight {
+    background-color: rgba(76, 175, 80, 0.5);;
+    color: white;
+}
 @media (max-width: 768px) {
     .grid-container {
         grid-template-columns: repeat(11, 1fr);
