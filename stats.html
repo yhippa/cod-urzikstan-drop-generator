@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LGXGEP1C7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0LGXGEP1C7');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Warzone 2 Urzikstan Grid Drop Generator Stats</title>
+    <style>
+        body {
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding-top: 0;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 1px;
+            background-size: 80%;
+            background-position: calc(50% + 20%) center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-image: url('/images/URZ_FullMap_BaseLayer.png');
+            width: 100%;
+            aspect-ratio: 1;
+            margin: auto;
+        }
+        .grid-header, .grid-item {
+            text-align: center;
+            padding: 10px 0;
+            font-size: 16px;
+        }
+        .highlight-green {
+            background-color: rgba(76, 175, 80, 0.5);
+            color: white;
+        }
+        .highlight-yellow {
+            background-color: rgba(255, 235, 59, 0.5);
+            color: white;
+        }
+        .highlight-red {
+            background-color: rgba(244, 67, 54, 0.5);
+            color: white;
+        }
+        .highlight-orange {
+            background-color: rgba(255, 165, 0, 0.5);
+            color: white;
+        }
+        .grid-header {
+            font-weight: bold;
+        }
+        .grid-item {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .instructions-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .instructions-container img {
+            max-width: 300px;
+            width: 100%;
+            margin-left: 20px;
+        }
+        .dropdown-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .dropdown-container label {
+            width: 40%;
+        }
+        .dropdown-container button {
+            background-color: red;
+            color: white;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 14px;
+            width: 20%;
+        }
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(11, 1fr);
+                max-width: 100%;
+            }
+            .grid-item, .grid-header {
+                font-size: 10px;
+                padding: 5px 0;
+            }
+            .instructions-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .instructions-container img {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .grid-container {
+                grid-template-columns: repeat(11, 1fr);
+                max-width: 100%;
+            }
+            .grid-item, .grid-header {
+                font-size: 8px;
+                padding: 3px 0;
+            }
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9594398022297274"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>Warzone 2 Urzikstan Drop Generator</strong></li>
+        </ul>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/stats.html">Drop Stats</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="grid">
+            <section>
+                <div class="instructions-container">
+                    <p id="instructions">Here's where people have been dropping.</p>
+                    <img src="/images/captain.png" alt="Warzone Image">
+                </div>
+                <div id="gridLocation" class="grid-container" style="margin-top: 20px;">
+                    <!-- Grid with headers will be dynamically generated here -->
+                </div>
+                <div id="matchResults" style="margin-top: 20px;">
+                    <!-- Results will be dynamically added here -->
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="container">
+        <small>
+        </small>
+    </footer>
+    <script>
+        const letters = "ABCDEFGHIJ";
+        const gridContainer = document.getElementById("gridLocation");
+
+        function createGrid() {
+            for (let i = 0; i <= 10; i++) {
+                const header = document.createElement("div");
+                header.classList.add("grid-header");
+                header.textContent = i === 0 ? "" : letters[i - 1];
+                gridContainer.appendChild(header);
+            }
+            for (let i = 0; i < 10; i++) {
+                const rowHeader = document.createElement("div");
+                rowHeader.classList.add("grid-header");
+                rowHeader.textContent = i;
+                gridContainer.appendChild(rowHeader);
+                for (let j = 0; j < 10; j++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("grid-item");
+                    cell.id = letters[j] + i;
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function highlightCells(data) {
+            const counts = {};
+            data.Items.forEach(item => {
+                if (!counts[item.droplocation]) {
+                    counts[item.droplocation] = 0;
+                }
+                counts[item.droplocation]++;
+            });
+
+            Object.keys(counts).forEach(location => {
+                const cell = document.getElementById(location);
+                if (cell) {
+                    let colorClass = "";
+                    const result = data.Items.find(item => item.droplocation === location).result;
+                    switch (result) {
+                        case "First":
+                            colorClass = "highlight-green";
+                            break;
+                        case "Second":
+                            colorClass = "highlight-green";
+                            break;
+                        case "Top 10":
+                            colorClass = "highlight-orange";
+                            break;
+                        case "Terrible":
+                            colorClass = "highlight-yellow";
+                            break;
+                        case "DNF":
+                            colorClass = "highlight-red";
+                            break;
+                        default:
+                            break;
+                    }
+                    cell.classList.add(colorClass);
+                }
+            });
+        }
+
+        function fetchData() {
+            fetch('https://1uqyg72qkf.execute-api.us-east-1.amazonaws.com/default/wz_save_results?TableName=wz_results')
+                .then(response => response.json())
+                .then(data => highlightCells(data))
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        createGrid();
+        fetchData();
+    </script>
+</body>
+</html>
