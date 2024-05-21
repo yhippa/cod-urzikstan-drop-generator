@@ -26,7 +26,8 @@
             display: grid;
             grid-template-columns: repeat(11, 1fr);
             gap: 1px;
-            background-size: cover;
+            background-size: 80%;
+            background-position: calc(50% + 20%) center; /* Center the background image */
             background-repeat: no-repeat;
             background-attachment: scroll;
             background-image: url('/images/URZ_FullMap_BaseLayer.png');
@@ -37,7 +38,7 @@
         .grid-header, .grid-item {
             text-align: center;
             padding: 10px 0;
-            font-size: 14px;
+            font-size: 16px;
         }
         .highlight {
             background-color: rgba(76, 175, 80, 0.5);;
@@ -120,8 +121,6 @@
         </ul>
         <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#" role="button">Contact</a></li>
         </ul>
     </nav>
     <main class="container">
@@ -144,7 +143,6 @@
     </main>
     <footer class="container">
         <small>
-            <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a>
         </small>
     </footer>
     <script>
