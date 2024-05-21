@@ -182,6 +182,9 @@ const drillSergeantQuips = [
         const gridContainer = document.getElementById("gridLocation");
         const matchResults = document.getElementById("matchResults");
 
+        let currentTimestamp = null;
+        let currentIdentifier = null;
+
         function generateQuip() {
             document.getElementById("generateButton").textContent = buttonQuips[Math.floor(Math.random() * buttonQuips.length)];
         }
@@ -231,6 +234,12 @@ const drillSergeantQuips = [
             selectedCell.textContent = letter + number;
             generateQuip();
             addDropdown(letter + number);
+            generateTimestampAndIdentifier();
+        }
+
+        function generateTimestampAndIdentifier() {
+            currentTimestamp = new Date().toISOString();
+            currentIdentifier = Math.random().toString(36).substring(2, 15);
         }
 
         function addDropdown(match) {
@@ -239,12 +248,17 @@ const drillSergeantQuips = [
             const label = document.createElement("label");
             label.textContent = "Match Result: " + match;
             const select = document.createElement("select");
-            const options = ["Terrible", "First", "Podium", "Top 10", "DNF"];
+            const options = ["","Terrible", "First", "Podium", "Top 10", "DNF"];
             options.forEach(optionText => {
                 const option = document.createElement("option");
                 option.value = optionText;
                 option.textContent = optionText;
                 select.appendChild(option);
+            });
+            select.addEventListener('change', function() {
+                if (select.value) {
+                    postResult(match, select.value);
+                }
             });
             const removeButton = document.createElement("button");
             removeButton.textContent = "X";
@@ -255,6 +269,29 @@ const drillSergeantQuips = [
             dropdownContainer.appendChild(select);
             dropdownContainer.appendChild(removeButton);
             matchResults.appendChild(dropdownContainer);
+        }
+
+        function postResult(match, result) {
+            const url = "https://1uqyg72qkf.execute-api.us-east-1.amazonaws.com/default/wz_save_results";
+            const data = {
+                TableName: "wz_results",
+                Item: {
+                    timestamp: currentTimestamp,
+                    identifier: currentIdentifier,
+                    result: result
+                }
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => console.log('Success:', data))
+            .catch((error) => console.error('Error:', error));
         }
 
         addDrillSargeant();
