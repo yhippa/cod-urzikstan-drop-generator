@@ -20,14 +20,12 @@
             margin: 0;
             padding: 0;
         }
-
-        .main.container {
+        .container {
             padding-top: 0;
         }
-
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(11, 1fr); /* Include header */
+            grid-template-columns: repeat(11, 1fr);
             gap: 1px;
             background-size: cover;
             background-repeat: no-repeat;
@@ -39,13 +37,12 @@
             margin: auto;
         }
         .grid-header, .grid-item {
-            /*background-color: #f0f0f0;*/
             text-align: center;
             padding: 10px 0;
             font-size: 14px;
         }
         .highlight {
-            background-color: #4CAF50; /* Green */
+            background-color: #4CAF50;
             color: white;
         }
         .grid-header {
@@ -56,6 +53,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(11, 1fr);
+                max-width: 100%;
+            }
+            .grid-item, .grid-header {
+                font-size: 10px;
+                padding: 5px 0;
+            }
+        }
+        @media (max-width: 480px) {
+            .grid-container {
+                grid-template-columns: repeat(11, 1fr);
+                max-width: 100%;
+            }
+            .grid-item, .grid-header {
+                font-size: 8px;
+                padding: 3px 0;
+            }
         }
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9594398022297274"
@@ -75,13 +92,8 @@
     <main class="container">
         <div class="grid">
             <section>
-                <hgroup>
-                    <h2>Warzone 2 Urzikstan Grid Drop Generator</h2>
-                    <h3>Discover Your Next Drop Location in Urzikstan</h3>
-                </hgroup>
                 <p id="instructions">Listen up, you clueless bag of bones! I'm going to give you instructions, so head to the far end of nowhere, take a left at Dumbass Junction, and march straight into Idiotville. Now click the button!</p>
                 <!-- Display area for the grid coordinate -->
-
                 <button type="button" id="generateButton" onclick="generateGridDrop()">Generate Grid Drop</button>
                 <div id="gridLocation" class="grid-container" style="margin-top: 20px;">
                     <!-- Grid with headers will be dynamically generated here -->
@@ -95,7 +107,7 @@
         </small>
     </footer>
     <script>
-        const drillSergeantQuips = [
+const drillSergeantQuips = [
             "Listen up, you hopeless sack of meat! I'll give you instructions: go to Nowhere, take a left at Dumbass Junction, and march into Idiotville. Now click the button!",
             "Attention, you sorry excuse for a recruit! Follow my directions: head to the end of Loserville, turn right at Clueless Corner, and march to Idiotville. Now click the button!",
             "Hey, you brain-dead maggot! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
@@ -199,30 +211,25 @@
             "Push that button like it's your favorite toy!"
             ];
 
-
         const letters = "ABCDEFGHIJ";
         const excludedCells = ["A0","A1","A2","A3","A4","A5","A6","A7","A8","A9","B0","B9","C0","C9","D0","D9","E0","E9","F0","F9","G0","G9","H0","H9","I0","I9","J0","J1","J2","J3","J4","J5","J6","J7","J8","J9"];
         const gridContainer = document.getElementById("gridLocation");
 
         function generateQuip() {
-            // Randomly select an entry from the array for the button text
             document.getElementById("generateButton").textContent = buttonQuips[Math.floor(Math.random() * buttonQuips.length)];
         }
 
         function addDrillSargeant() {
-            // Randomly select an entry from the array for the button text
             document.getElementById("instructions").textContent = drillSergeantQuips[Math.floor(Math.random() * drillSergeantQuips.length)];
         }
 
         function createGrid() {
-            // Create header for the columns
             for (let i = 0; i <= 10; i++) {
                 const header = document.createElement("div");
                 header.classList.add("grid-header");
                 header.textContent = i === 0 ? "" : letters[i - 1];
                 gridContainer.appendChild(header);
             }
-            // Create grid cells with row headers
             for (let i = 0; i < 10; i++) {
                 const rowHeader = document.createElement("div");
                 rowHeader.classList.add("grid-header");
@@ -246,24 +253,17 @@
                 number = Math.floor(Math.random() * 10);
                 isValid = !excludedCells.includes(letter + number);
             }
-            // Clear previous highlights
             document.querySelectorAll('.grid-item').forEach(item => {
                 if (!item.classList.contains("grid-header")) {
                     item.classList.remove('highlight');
-                    item.textContent = ""; //Also remove the grid name from the contents
+                    item.textContent = "";
                 }
-                
             });
             const selectedCell = document.getElementById(letter + number);
             selectedCell.classList.add("highlight");
-            selectedCell.textContent = letter + number; //add the combo within the grid
+            selectedCell.textContent = letter + number;
             generateQuip();
-
-            // Update the displayed grid coordinate
-            document.getElementById("coordinateDisplay").textContent = letter + number;
-
         }
-
 
         addDrillSargeant();
         generateQuip();
