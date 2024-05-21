@@ -12,121 +12,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="/style.css">
     <title>Warzone 2 Urzikstan Grid Drop Generator Stats</title>
-    <style>
-        body {
-            position: relative;
-            margin: 0;
-            padding: 0;
-            background-size: 20%;
-            background-position: left bottom; /* Center the background image */
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            background-image: url('/images/pigeon.png');
-        }
-        .container {
-            padding-top: 0;
-        }
-        .grid-container {
-            position: relative;
-            display: grid;
-            grid-template-columns: repeat(11, 1fr);
-            gap: 1px;
-            background-size: 100%;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            background-image: url('/images/base_map.png');
-            width: 100%;
-            aspect-ratio: 1;
-            margin: auto;
-        }
-        .grid-container::after {
-            content: "";
-            position: absolute;git add
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-image: url('/images/map_border.png'); 
-            pointer-events: none;
-        }
-        .grid-header, .grid-item {
-            text-align: center;
-            padding: 10px 0;
-            font-size: 16px;
-            color: white;
-        }
-        .grid-header {
-            font-weight: bold;
-        }
-        .grid-item {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .instructions-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .instructions-container img {
-            max-width: 300px;
-            width: 100%;
-            margin-left: 20px;
-        }
-        .dropdown-container {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .dropdown-container label {
-            width: 40%;
-        }
-        .dropdown-container button {
-            background-color: red;
-            color: white;
-            border: none;
-            margin-left: 10px;
-            cursor: pointer;
-            padding: 5px 10px;
-            font-size: 14px;
-            width: 20%;
-        }
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: repeat(11, 1fr);
-                max-width: 100%;
-            }
-            .grid-item, .grid-header {
-                font-size: 10px;
-                padding: 5px 0;
-            }
-            .instructions-container {
-                flex-direction: column;
-                text-align: center;
-            }
-            .instructions-container img {
-                margin-left: 0;
-                margin-top: 10px;
-            }
-        }
-        @media (max-width: 480px) {
-            .grid-container {
-                grid-template-columns: repeat(11, 1fr);
-                max-width: 100%;
-            }
-            .grid-item, .grid-header {
-                font-size: 8px;
-                padding: 3px 0;
-            }
-        }
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9594398022297274"
      crossorigin="anonymous"></script>
@@ -153,6 +40,25 @@
                 </div>
                 <div id="matchResults" style="margin-top: 20px;">
                     <!-- Results will be dynamically added here -->
+                </div>
+                <div class="legend-container">
+                    <h3>Legend</h3>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: rgba(76, 175, 80, 1);"></div>
+                        <span>First</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: rgba(255, 165, 0, 1);"></div>
+                        <span>Top 10</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: rgba(255, 235, 59, 1);"></div>
+                        <span>Terrible</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: rgba(244, 67, 54, 1);"></div>
+                        <span>DNF</span>
+                    </div>
                 </div>
             </section>
         </div>
