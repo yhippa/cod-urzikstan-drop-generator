@@ -40,22 +40,6 @@
             padding: 10px 0;
             font-size: 16px;
         }
-        .highlight-green {
-            background-color: rgba(76, 175, 80, 0.5);
-            color: white;
-        }
-        .highlight-yellow {
-            background-color: rgba(255, 235, 59, 0.5);
-            color: white;
-        }
-        .highlight-red {
-            background-color: rgba(244, 67, 54, 0.5);
-            color: white;
-        }
-        .highlight-orange {
-            background-color: rgba(255, 165, 0, 0.5);
-            color: white;
-        }
         .grid-header {
             font-weight: bold;
         }
@@ -64,6 +48,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
         .instructions-container {
             display: flex;
@@ -181,6 +166,22 @@
             }
         }
 
+        function getHighlightColor(result, count) {
+            const baseColors = {
+                "First": "rgba(76, 175, 80, OPACITY)",
+                "Second": "rgba(76, 175, 80, OPACITY)",
+                "Top 10": "rgba(255, 165, 0, OPACITY)",
+                "Terrible": "rgba(255, 235, 59, OPACITY)",
+                "DNF": "rgba(244, 67, 54, OPACITY)"
+            };
+
+            const maxOpacity = 1;
+            const minOpacity = 0.1;
+            const opacity = Math.max(minOpacity, maxOpacity - (count * 0.1));
+            console.log("Opacity calcualted is: " + opactiy);
+            return baseColors[result].replace("OPACITY", .1);
+        }
+
         function highlightCells(data) {
             const counts = {};
             data.Items.forEach(item => {
@@ -193,28 +194,10 @@
             Object.keys(counts).forEach(location => {
                 const cell = document.getElementById(location);
                 if (cell) {
-                    let colorClass = "";
-                    const result = data.Items.find(item => item.droplocation === location).result;
-                    switch (result) {
-                        case "First":
-                            colorClass = "highlight-green";
-                            break;
-                        case "Second":
-                            colorClass = "highlight-green";
-                            break;
-                        case "Top 10":
-                            colorClass = "highlight-orange";
-                            break;
-                        case "Terrible":
-                            colorClass = "highlight-yellow";
-                            break;
-                        case "DNF":
-                            colorClass = "highlight-red";
-                            break;
-                        default:
-                            break;
-                    }
-                    cell.classList.add(colorClass);
+                    const item = data.Items.find(item => item.droplocation === location);
+                    const color = getHighlightColor(item.result, counts[location]);
+                    cell.style.backgroundColor = color;
+                    cell.innerHTML = `<span>${location}</span><span>${counts[location]}</span>`;
                 }
             });
         }
