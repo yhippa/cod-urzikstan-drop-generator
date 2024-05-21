@@ -7,7 +7,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-0LGXGEP1C7');
     </script>
     <meta charset="UTF-8">
@@ -42,7 +41,7 @@
             font-size: 14px;
         }
         .highlight {
-            background-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.8);;
             color: white;
         }
         .grid-header {
@@ -54,6 +53,32 @@
             align-items: center;
             justify-content: center;
         }
+        .instructions-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .instructions-container img {
+            max-width: 300px;
+            width: 100%;
+            margin-left: 20px;
+        }
+        .dropdown-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .dropdown-container button {
+            background-color: red;
+            color: white;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 14px;
+            width: 20%;
+        }
         @media (max-width: 768px) {
             .grid-container {
                 grid-template-columns: repeat(11, 1fr);
@@ -62,6 +87,14 @@
             .grid-item, .grid-header {
                 font-size: 10px;
                 padding: 5px 0;
+            }
+            .instructions-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .instructions-container img {
+                margin-left: 0;
+                margin-top: 10px;
             }
         }
         @media (max-width: 480px) {
@@ -92,11 +125,17 @@
     <main class="container">
         <div class="grid">
             <section>
-                <p id="instructions">Listen up, you clueless bag of bones! I'm going to give you instructions, so head to the far end of nowhere, take a left at Dumbass Junction, and march straight into Idiotville. Now click the button!</p>
+                <div class="instructions-container">
+                    <p id="instructions">Listen up, you clueless bag of bones! I'm going to give you instructions, so head to the far end of nowhere, take a left at Dumbass Junction, and march straight into Idiotville. Now click the button!</p>
+                    <img src="/images/captain.png" alt="Warzone Image">
+                </div>
                 <!-- Display area for the grid coordinate -->
                 <button type="button" id="generateButton" onclick="generateGridDrop()">Generate Grid Drop</button>
                 <div id="gridLocation" class="grid-container" style="margin-top: 20px;">
                     <!-- Grid with headers will be dynamically generated here -->
+                </div>
+                <div id="matchResults" style="margin-top: 20px;">
+                    <!-- Dropdowns will be dynamically added here -->
                 </div>
             </section>
         </div>
@@ -108,112 +147,40 @@
     </footer>
     <script>
 const drillSergeantQuips = [
-            "Listen up, you hopeless sack of meat! I'll give you instructions: go to Nowhere, take a left at Dumbass Junction, and march into Idiotville. Now click the button!",
-            "Attention, you sorry excuse for a recruit! Follow my directions: head to the end of Loserville, turn right at Clueless Corner, and march to Idiotville. Now click the button!",
-            "Hey, you brain-dead maggot! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "Listen up, you confused slug! Your instructions: go to the edge of Stupid, turn left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You dense piece of garbage! I'm giving you directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you witless fool! Follow these instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You miserable excuse for a recruit! Your directions are: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you clueless dolt! I'm giving you directions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you dimwit! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You sorry sack of potatoes! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you pathetic fool! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You worthless idiot! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you dumbass! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You brainless moron! Your directions are: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you clueless waste of space! I'm giving you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you idiot! Follow these instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You useless twit! Here are your directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you dumb fool! I'm giving you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You pathetic excuse for a soldier! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you blockhead! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "Listen up, you pea-brained nitwit! I'll give you directions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You worthless fool! Follow these instructions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you dimwit! Here are your directions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You clueless idiot! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you hopeless nitwit! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You brain-dead recruit! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you blockhead! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You useless moron! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you clueless twit! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You sorry excuse for a soldier! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you dimwit! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You worthless idiot! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you dumbass! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You pathetic fool! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you hopeless nitwit! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You brain-dead blockhead! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you clueless idiot! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You worthless twit! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you dumb fool! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You pathetic excuse for a recruit! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you pea-brained idiot! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You worthless nitwit! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you dimwit! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You sorry excuse for a soldier! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you clueless moron! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "You brain-dead nitwit! Follow these directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Hey, you hopeless idiot! Here are your instructions: head to Nowhere, left at Dumbass Junction, and straight to Idiotville. Now click the button!",
-            "You useless fool! Follow my directions: head to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!",
-            "Listen up, you worthless twit! I'll give you instructions: go to Nowhere, left at Dumbass Junction, and march to Idiotville. Now click the button!"
-        ];
+    "You lot look like a circus act on a field trip, but the battlefield needs some comic relief!",
+    "I've seen scarecrows with more combat readiness, but hey, the crows need a laugh too!",
+    "You guys might look like a parade of clowns, but even clowns can pack a punch with the right attitude!",
+    "The enemy won’t know whether to fight you or ask for your autograph at the circus!",
+    "Sure, you look like a ragtag bunch of misfits, but who ever said heroes had to be photogenic?",
+    "You guys look like you should be selling popcorn, but let’s show the enemy we mean business!",
+    "I’ve seen more intimidating kitchen appliances, but let’s surprise them with our enthusiasm!",
+    "You look like a bunch of mismatched socks, but hey, no one ever won a war on style alone!",
+    "They may laugh when they see you, but they won’t be laughing when we take them down!",
+    "You guys look like a joke, but let’s make sure the punchline is on the enemy!",
+    "If looking ridiculous were a weapon, you’d be armed to the teeth!",
+    "You might look like a disaster waiting to happen, but even disasters can be heroic!",
+    "With a lineup like this, the enemy will never see us coming – they’ll be too busy laughing!",
+    "You look like you should be auditioning for a comedy show, but let’s turn that laughter into victory!",
+    "Sure, you look like a group of escapees from a costume party, but let’s show them what party crashers can do!",
+    "You might look like you belong in a cartoon, but let’s give the enemy a real-life nightmare!",
+    "The way you look, the enemy might think it’s their birthday – but we’re about to deliver some unwanted surprises!",
+    "You guys look like a joke, but we’ll make sure the punchline is a victory!",
+    "You look like a bunch of walking target practice, but let’s show them what we’re really aiming for!",
+    "Sure, you look like the before picture in a military ad, but wait till they see the after!",
+    "If courage came in looks, we’d be in trouble – but lucky for us, it comes from the heart!",
+    "You might look like a comedy troupe, but let’s write a heroic script they’ll never forget!",
+    "You look like you’re ready for a sitcom, but let’s make this episode about unexpected heroes!",
+    "The enemy will laugh when they see you, but they won’t be laughing when they’re on the run!",
+    "You look like a bunch of misfit toys, but we’re about to show them we play for keeps!"
+];
         const buttonQuips = 
-            ["Push that button like it's a big red snooze button!",
-            "Button, meet Private. Private, meet button. Now, make it happen!",
-            "Push that button like it's free pizza delivery!",
-            "Push that button like it's a giant chocolate chip cookie!",
-            "Push that button like it owes you money!",
-            "Push that button like it's your weekend pass!",
-            "Push that button like it's your ex's ego!",
-            "Push that button like it's a surprise family reunion!",
-            "Push that button like it's the last slice of pizza!",
-            "Push that button like it's an elevator door close button!",
-            "Push that button like it's the 'skip ad' button!",
-            "Push that button like it's ending a bad blind date!",
-            "Push that button like it's giant bubble wrap!",
-            "Push that button like it's a million-dollar answer!",
-            "Push that button like it's last call at the bar!",
-            "Push that button like it's your ticket home!",
-            "Push that button like it's a lottery ticket!",
-            "Push that button like it's your favorite game!",
-            "Push that button like it's a fire alarm in a drill!",
-            "Push that button like it's a carnival game!",
-            "Push that button like it's a photo booth!",
-            "Push that button like it's a big red candy button!",
-            "Push that button like it's the winning buzzer!",
-            "Push that button like it's a prank on your buddy!",
-            "Push that button like it's a game show button!",
-            "Push that button like it's a confetti cannon!",
-            "Push that button like it's a doorbell on Halloween!",
-            "Push that button like it's a surprise party popper!",
-            "Push that button like it's a jackpot slot machine!",
-            "Push that button like it's a superhero's signal!",
-            "Push that button like it's your birthday wish!",
-            "Push that button like it's a vending machine!",
-            "Push that button like it's a pinball machine!",
-            "Push that button like it's a high score record!",
-            "Push that button like it's a magic trick!",
-            "Push that button like it's a snow day announcement!",
-            "Push that button like it's a quiz show answer!",
-            "Push that button like it's your favorite song!",
-            "Push that button like it's a golden ticket!",
-            "Push that button like it's a VIP pass!",
-            "Push that button like it's a dream come true!",
-            "Push that button like it's the end of a marathon!",
-            "Push that button like it's a buzzer beater!",
-            "Push that button like it's the finish line!",
-            "Push that button like it's a race starter!",
-            "Push that button like it's a roller coaster start!",
-            "Push that button like it's a secret agent gadget!",
-            "Push that button like it's a surprise gift!",
-            "Push that button like it's a space shuttle launch!",
-            "Push that button like it's your favorite toy!"
+            ["Give me a random drop"
             ];
 
         const letters = "ABCDEFGHIJ";
         const excludedCells = ["A0","A1","A2","A3","A4","A5","A6","A7","A8","A9","B0","B9","C0","C9","D0","D9","E0","E9","F0","F9","G0","G9","H0","H9","I0","I9","J0","J1","J2","J3","J4","J5","J6","J7","J8","J9"];
         const gridContainer = document.getElementById("gridLocation");
+        const matchResults = document.getElementById("matchResults");
 
         function generateQuip() {
             document.getElementById("generateButton").textContent = buttonQuips[Math.floor(Math.random() * buttonQuips.length)];
@@ -263,6 +230,31 @@ const drillSergeantQuips = [
             selectedCell.classList.add("highlight");
             selectedCell.textContent = letter + number;
             generateQuip();
+            addDropdown(letter + number);
+        }
+
+        function addDropdown(match) {
+            const dropdownContainer = document.createElement("div");
+            dropdownContainer.classList.add("dropdown-container");
+            const label = document.createElement("label");
+            label.textContent = "Match Result: " + match;
+            const select = document.createElement("select");
+            const options = ["Terrible", "First", "Podium", "Top 10", "DNF"];
+            options.forEach(optionText => {
+                const option = document.createElement("option");
+                option.value = optionText;
+                option.textContent = optionText;
+                select.appendChild(option);
+            });
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "X";
+            removeButton.onclick = function() {
+                dropdownContainer.remove();
+            };
+            dropdownContainer.appendChild(label);
+            dropdownContainer.appendChild(select);
+            dropdownContainer.appendChild(removeButton);
+            matchResults.appendChild(dropdownContainer);
         }
 
         addDrillSargeant();
