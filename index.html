@@ -184,7 +184,7 @@ const drillSergeantQuips = [
 
         let currentTimestamp = null;
         let currentIdentifier = null;
-        let currentMatch = null;
+        let currentDrop = null;
 
         function generateQuip() {
             document.getElementById("generateButton").textContent = buttonQuips[Math.floor(Math.random() * buttonQuips.length)];
@@ -236,7 +236,7 @@ const drillSergeantQuips = [
             generateQuip();
             addDropdown(letter + number);
             generateTimestampAndIdentifier();
-            currentMatch = letter + number;
+            currentDrop = letter + number;
         }
 
         function generateTimestampAndIdentifier() {
@@ -244,11 +244,11 @@ const drillSergeantQuips = [
             currentIdentifier = Math.random().toString(36).substring(2, 15);
         }
 
-        function addDropdown(match) {
+        function addDropdown(droplocation) {
             const dropdownContainer = document.createElement("div");
             dropdownContainer.classList.add("dropdown-container");
             const label = document.createElement("label");
-            label.textContent = "Match Result: " + match;
+            label.textContent = "Match Result: " + droplocation;
             const select = document.createElement("select");
             const options = ["","Terrible", "First", "Podium", "Top 10", "DNF"];
             options.forEach(optionText => {
@@ -280,7 +280,7 @@ const drillSergeantQuips = [
                 Item: {
                     timestamp: currentTimestamp,
                     identifier: currentIdentifier,
-                    match: currentMatch,
+                    droplocation: currentDrop,
                     result: result
                 }
             };
